@@ -10,14 +10,14 @@ public class Lists
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        Lists<int> multiples = new Lists<int>();
+        Lists<int> multiples = new Lists<int>(); // list to add multiples to return
 
-        for (int i = 1; i <= length; i++)
+        for (int i = 1; i <= length; i++) // cycles through specified length
         {
-            list.Add(number * i);
+            list.Add(number * i); // adds multiple of number to list
         }
         
-        return multiples;
+        return multiples; // returns list of multiples
     }
 
     /// <summary>
