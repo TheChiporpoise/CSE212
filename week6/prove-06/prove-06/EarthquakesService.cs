@@ -5,6 +5,21 @@ namespace prove_06;
 
 public static class EarthquakesService
 {
+    class FeatureCollection // first level of the JSON data
+    {
+        public List<Features> Features { get; set; } = new List<Features>();
+    }
+
+    class Features // second level of the JSON data
+    {
+        public Properties Properties { get; set; } = new Properties();
+    }
+
+    class Properties // third level of the JSON data
+    {
+        public string Place { get; set; } = string.Empty;
+        public double Mag { get; set; }
+    }
     /// <summary>
     /// <para>This function will read JSON (Javascript Object Notation) data from the 
     /// United States Geological Service (USGS) consisting of earthquake data.
@@ -28,12 +43,19 @@ public static class EarthquakesService
 
         // TODO Map the earthquake data to objects and add to the results in the right format
         // 1. Add your code to map the json to the feature collection object, creating additional classes as needed
-        
+            // Kept giving me errors when I tried to define the classes inside, so I defined them outside the method
         // 2. Add each earthquake to the results list in the correct format (see below for example
         List<string> results = new List<string>();
 
-        // TODO Change the results to add earthquakes from today to the results instead of these hard-coded ones
-        results.Add("1km NE of Pahala, Hawaii - Mag 2.36"); // Example add of 1 earthquake
+        if (featureCollection != null)
+        {
+            foreach (var feature in featureCollection.Features) // Iterate through each earthquake feature
+            {
+                string place = feature.Properties.Place;
+                double mag = feature.Properties.Mag;
+                results.Add($"{place} - Mag {mag}"); // construct the string in the required format and add to results
+            }
+        }
 
         return results;
     }
