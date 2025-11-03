@@ -142,6 +142,27 @@ public class LinkedList : IEnumerable<int>
     public void Remove(int value)
     {
         // TODO Problem 3
+        for (var item = _head; item is not null; item = item.Next) // Iterate through each node
+        {
+            if (item.Data == value)
+            {
+                if (item == _head) // If the node to be removed is the head
+                {
+                    RemoveFirst();
+                }
+                else if (item == _tail) // If the node to be removed is the tail
+                {
+                    RemoveLast();
+                }
+                else // For any other location of 'value'
+                {
+                    item.Prev!.Next = item.Next; // Connect previous node to next node
+                    item.Next!.Prev = item.Prev; // Connect next node to previous node
+                }
+
+                return; // We can exit the function after we remove
+            }
+        }
     }
 
     /// <summary>
@@ -150,6 +171,13 @@ public class LinkedList : IEnumerable<int>
     public void Replace(int oldValue, int newValue)
     {
         // TODO Problem 4
+        for (var item = _head; item is not null; item = item.Next) // Iterate through each node
+        {
+            if (item.Data == oldValue)
+            {
+                item.Data = newValue; // Replace oldValue with newValue
+            }
+        }
     }
 
     /// <summary>
@@ -180,7 +208,13 @@ public class LinkedList : IEnumerable<int>
     public IEnumerable Reverse()
     {
         // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+
+        var curr = _tail; // Start at the end since this is a backward iteration.
+        while (curr is not null)
+        {
+            yield return curr.Data;
+            curr = curr.Prev; // Go backward in the linked list
+        }
     }
 
     public override string ToString()
